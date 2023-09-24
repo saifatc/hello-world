@@ -19,7 +19,7 @@
     "resource_group": "ATC-Pipeline-Demo",
     "gallery_name": "ATC_VM_Gallery",
     "image_name": "PackerTestImage",
-    "image_version": "1.0.0",
+    "image_version": "1.0.4",
     "replication_regions": ["Australia East"],
     "storage_account_type": "Standard_LRS"
 	},
