@@ -1,0 +1,57 @@
+{
+  "variables": {
+        "client_id": "",
+        "client_secret": "",
+        "tenant_id": "",
+        "subscription_id": "",
+        "managed_image_prefix": ""
+    },
+  
+  "builders": [{
+    "type": "azure-arm",
+
+    "client_id": "{{user 'client_id'}}",
+    "client_secret": "{{user 'client_secret'}}",
+    "tenant_id": "{{user 'tenant_id'}}",
+    "subscription_id": "{{user 'subscription_id'}}",
+	
+	"shared_image_gallery_destination": {
+    "subscription": "0ff198df-9afd-40fd-b43f-866994ef41b1",
+    "resource_group": "ATC-Pipeline-Demo",
+    "gallery_name": "ATC_VM_Gallery",
+    "image_name": "PackerTestImage",
+    "image_version": "1.0.0",
+    "replication_regions": ["Australia East"],
+    "storage_account_type": "Standard_LRS"
+	},
+
+    "managed_image_resource_group_name": "ATC-Pipeline-Demo",
+    "managed_image_name": "{{user 'managed_image_prefix'}}-{{isotime \"200601020304\"}}",
+
+    "os_type": "Linux",
+    "image_publisher": "canonical",
+    "image_offer": "0001-com-ubuntu-server-jammy",
+    "image_sku": "22_04-lts",
+
+    "azure_tags": {
+        "dept": "Web",
+        "task": "Image deployment"
+    },
+
+    "location": "Australia East",
+    "vm_size": "Standard_DS2_v2",
+	"async_resourcegroup_delete":true
+  }],
+  "provisioners": [{
+    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "apt-get update",
+      "apt-get upgrade -y",
+      "apt-get -y install nginx",
+
+      "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+    ],
+    "inline_shebang": "/bin/sh -x",
+    "type": "shell"
+  }]
+}
