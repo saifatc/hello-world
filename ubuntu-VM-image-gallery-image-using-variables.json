@@ -3,17 +3,16 @@
         "client_id": "",
         "client_secret": "",
         "tenant_id": "",
-        "subscription_id": "",
-        "managed_image_prefix": ""
+        "subscription_id": ""
     },
   
   "builders": [{
     "type": "azure-arm",
 
-    "client_id": "{{user 'client_id'}}",
-    "client_secret": "{{user 'client_secret'}}",
-    "tenant_id": "{{user 'tenant_id'}}",
-    "subscription_id": "{{user 'subscription_id'}}",
+    "client_id": "{{user `client_id`}}",
+    "client_secret": "{{user `client_secret`}}",
+    "tenant_id": "{{user `tenant_id`}}",
+    "subscription_id": "{{user `subscription_id`}}",
 	
 	"shared_image_gallery_destination": {
     "subscription": "0ff198df-9afd-40fd-b43f-866994ef41b1",
@@ -26,7 +25,7 @@
 	},
 
     "managed_image_resource_group_name": "ATC-Pipeline-Demo",
-    "managed_image_name": "{{user 'managed_image_prefix'}}-{{isotime \"200601020304\"}}",
+    "managed_image_name": "Ubuntu-Nginx-Image-24thSep2023",
 
     "os_type": "Linux",
     "image_publisher": "canonical",
